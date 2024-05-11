@@ -23,7 +23,7 @@ const SideBar = () => {
   return (
     <nav className=" dark:bg-black h-screen overflow-scroll justify-between flex items-center flex-col  gap-10 py-6 px-2">
       <div className="flex items-center justify-center flex-col gap-4">
-        <Link className="flex font-bold flex-row mb-8" href="/">
+        <Link className="flex font-bold flex-row mb-4" href="/">
           fuzzie.
         </Link>
         <TooltipProvider>

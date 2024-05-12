@@ -1,5 +1,6 @@
 import ProfileForm from "@/components/form/profile-form";
 import React from "react";
+import ProfilePicture from "./_components/profile-picture";
 
 const Settings = () => {
   return (
@@ -14,6 +15,11 @@ const Settings = () => {
             Add or update your information
           </p>
         </div>
+        {/* <ProfilePicture
+          onDelete={removeProfileImage}
+          userImage={user?.profileImage || ""}
+          onUpload={uploadProfileImage}
+        ></ProfilePicture> */}
         <ProfileForm />
       </div>
     </div>

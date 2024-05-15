@@ -1,10 +1,7 @@
 "use client";
-import { EditUserProfileSchema } from "@/lib/validations/profileSchema";
-import { zodResolver } from "@hookform/resolvers/zod";
+import useProfileForm from "@/hooks/useProfileForm";
 import { Loader2 } from "lucide-react";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { useEffect } from "react";
 import { Button } from "../ui/button";
 import {
   Form,
@@ -16,19 +13,24 @@ import {
 } from "../ui/form";
 import { Input } from "../ui/input";
 
-const ProfileForm = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const form = useForm<z.infer<typeof EditUserProfileSchema>>({
-    mode: "onChange",
-    resolver: zodResolver(EditUserProfileSchema),
-    defaultValues: {
-      name: "",
-      email: "",
-    },
-  });
+type Props = {
+  user: any;
+  onUpdate?: any;
+};
+
+const ProfileForm = ({ user, onUpdate }: Props) => {
+  const { handleSubmit, isLoading, form } = useProfileForm({ user, onUpdate });
+
+  useEffect(() => {
+    form.reset({ name: user.name, email: user.email });
+  }, [user, form]);
+
   return (
     <Form {...form}>
-      <form className="flex flex-col gap-6" onSubmit={() => {}}>
+      <form
+        className="flex flex-col gap-6"
+        onSubmit={form.handleSubmit(handleSubmit)}
+      >
         <FormField
           disabled={isLoading}
           control={form.control}
@@ -44,14 +46,18 @@ const ProfileForm = () => {
           )}
         />
         <FormField
-          disabled={true}
           control={form.control}
           name="email"
           render={({ field }) => (
             <FormItem>
               <FormLabel className="text-lg">Email</FormLabel>
               <FormControl>
-                <Input {...field} placeholder="Email" type="email" />
+                <Input
+                  {...field}
+                  placeholder="Email"
+                  type="email"
+                  disabled={true}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
